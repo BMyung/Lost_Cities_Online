@@ -1,4 +1,21 @@
-{{title}}
+<h1>{{title}}</h1>
+<div id="deck">
 
+        <div>{{deck.length}} cards remaining</div>
+
+</div>
+
+<div id="hands">
+<div class="player_hand" *ngFor="let player of players">
+<h3>Player {{player}} hand</h3>
+<div *ngFor="let card of all_hands[player-1]" class="card {{card.color}}">{{card.num}}</div>
+
+</div>
+</div>
+
+<div id="buttons_box">
+<button (click)="shuffle()">Shuffle</button>
+<button (click)="deal()">Deal</button>
+</div>
 <router-outlet></router-outlet>
 

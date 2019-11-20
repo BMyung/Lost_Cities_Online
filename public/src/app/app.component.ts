@@ -1,14 +1,71 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  constructor() {}
-  ngOnInit(){}
   title = 'Hanabi';
+  all_hands=[[],[],[]];
 
-  
+  card = {
+    num: String,
+    color: String,
+  }
+  deck = []
+  players=["1","2","3"]
+  bombs = "";
+  clocks = "";
+
+
+  constructor() {}
+  ngOnInit(){
+this.reset()
+    
+  }
+
+
+
+    reset() {
+        this.deck = [];
+        this.all_hands = [];
+        var string = ["One", "One", "One","Two", "Two", "Three","Three", "Four",  "Four", "Five"];
+        var color = ["white", "red", "green", "blue", "yellow"];
+        for (var i = 0; i < 5; i++) {
+            for (var j = 0; j < 10; j++) {
+              var newCard = {"num": string[j],
+               "color": color[i]};
+                this.deck.push(newCard);
+            }
+        }
+        return this.deck
+    }
+
+    shuffle() {
+      this.reset()
+        var m = this.deck.length, t, i;
+        while (m) {
+            i = Math.floor(Math.random() * m--);
+            t = this.deck[m];
+            this.deck[m] = this.deck[i];
+            this.deck[i] = t;
+        }
+    }
+
+    deal() {
+      this.shuffle()
+        this.all_hands=[[],[],[]];
+        for (var i = 0; i < this.players.length; i++){
+          for (var k = 0; k < 5; k++){
+            this.all_hands[i][k] = this.deck[0];
+            this.deck.shift()
+            console.log(this.deck[0])
+          }
+        }
+        console.log(this.all_hands)
+          
+
+    }
 }

@@ -1,0 +1,52 @@
+.blue{
+    background-color: blue;
+    color: white;
+}
+
+.red{
+    background-color: red;
+    color: white;
+}
+
+.green{
+    background-color: green;
+    color: white;
+}
+
+.yellow{
+    background-color: yellow;
+    color: black;
+}
+
+#deck{
+width: 25%;
+display: inline-block;
+
+}
+
+#hands{
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 20px;
+    border: 2px solid green; 
+    width: 50%;
+    height: 800px;
+}
+
+#buttons_box{
+    display: inline-block;
+    vertical-align: top;
+}
+
+.card{
+    display: inline-block;
+    height: 80%;
+    width: 15%;
+    vertical-align: top;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.player_hand{
+    height: 20%
+}
