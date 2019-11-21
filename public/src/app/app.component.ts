@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import io from "socket.io-client";
 
 
 @Component({
@@ -7,65 +8,46 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  title = 'Hanabi';
+  
   all_hands=[[],[],[]];
-
+  private context: any;
+  private socket: any;
   card = {
     num: String,
     color: String,
+    id: String,
+    val: Number
   }
   deck = []
+  active_player = null;
   players=["1","2","3"]
-  bombs = "";
-  clocks = "";
+  bombs = null;
+  clocks = null;
 
 
   constructor() {}
   ngOnInit(){
-this.reset()
-    
+this.socket = io("http://localhost:8000");
+// this.reset()
+this.bombs = 3;
+this.clocks = 8;
+this.active_player = this.players[0]
   }
 
+  ngAfterViewInit() {
+    this.socket.on("message", data => {
+        console.log(data);
+      });
+    this.socket.on("all_hands", data =>{
+      this.all_hands = data;
+      this.socket.on("deck", deck_data =>{
+        this.deck = deck_data
+        console.log("TCL: AppComponent -> ngAfterViewInit -> deck_data", deck_data)
+      })
+    })
+}
+newGame(){
+  this.socket.emit("new")
+}
 
-
-    reset() {
-        this.deck = [];
-        this.all_hands = [];
-        var string = ["One", "One", "One","Two", "Two", "Three","Three", "Four",  "Four", "Five"];
-        var color = ["white", "red", "green", "blue", "yellow"];
-        for (var i = 0; i < 5; i++) {
-            for (var j = 0; j < 10; j++) {
-              var newCard = {"num": string[j],
-               "color": color[i]};
-                this.deck.push(newCard);
-            }
-        }
-        return this.deck
-    }
-
-    shuffle() {
-      this.reset()
-        var m = this.deck.length, t, i;
-        while (m) {
-            i = Math.floor(Math.random() * m--);
-            t = this.deck[m];
-            this.deck[m] = this.deck[i];
-            this.deck[i] = t;
-        }
-    }
-
-    deal() {
-      this.shuffle()
-        this.all_hands=[[],[],[]];
-        for (var i = 0; i < this.players.length; i++){
-          for (var k = 0; k < 5; k++){
-            this.all_hands[i][k] = this.deck[0];
-            this.deck.shift()
-            console.log(this.deck[0])
-          }
-        }
-        console.log(this.all_hands)
-          
-
-    }
 }

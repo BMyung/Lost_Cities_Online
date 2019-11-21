@@ -1,21 +1,25 @@
 .blue{
     background-color: blue;
     color: white;
+    text-align: center;
 }
 
 .red{
     background-color: red;
     color: white;
+    text-align: center;
 }
 
 .green{
     background-color: green;
     color: white;
+    text-align: center;
 }
 
 .yellow{
     background-color: yellow;
     color: black;
+    text-align: center;
 }
 
 #deck{
@@ -30,7 +34,8 @@ display: inline-block;
     margin-left: 20px;
     border: 2px solid green; 
     width: 50%;
-    height: 800px;
+    min-height: 600px;
+    padding: 10px;
 }
 
 #buttons_box{
@@ -44,9 +49,10 @@ display: inline-block;
     width: 15%;
     vertical-align: top;
     border: 1px solid black;
+    margin: 0px 5px;
     border-radius: 5px;
 }
 
 .player_hand{
-    height: 20%
+    height: 180px;
 }

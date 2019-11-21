@@ -3,11 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { Injectable } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
-
-const config:SocketIoConfig = {url:'http://localhost:4200', options: {} };
 
 
 @NgModule({
@@ -17,9 +12,9 @@ const config:SocketIoConfig = {url:'http://localhost:4200', options: {} };
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SocketIoModule.forRoot(config)
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
