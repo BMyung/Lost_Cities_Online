@@ -9,45 +9,68 @@ import io from "socket.io-client";
 })
 export class AppComponent implements OnInit{
   
-  all_hands=[[],[],[]];
+  player_action = null;
+  all_hands = [[],[]];
+  deck = [];
+  active_player = false;
   private context: any;
   private socket: any;
-  card = {
-    num: String,
-    color: String,
-    id: String,
-    val: Number
-  }
-  deck = []
-  active_player = null;
-  players=["1","2","3"]
-  bombs = null;
-  clocks = null;
+  players = [1,2];
+  player_stacks = [
+  {"red": [],
+  "green":[],
+  "blue": [],
+  "white":[],
+  "yellow":[]},
+  
+  {"red": [],
+  "green":[],
+  "blue": [],
+  "white":[],
+  "yellow":[]}]
 
+  discard_stacks = {
+    "red": [],
+    "green":[],
+    "blue": [],
+    "white":[],
+    "yellow":[]
+}
 
   constructor() {}
   ngOnInit(){
 this.socket = io("http://localhost:8000");
 // this.reset()
-this.bombs = 3;
-this.clocks = 8;
-this.active_player = this.players[0]
-  }
+}
 
   ngAfterViewInit() {
     this.socket.on("message", data => {
-        console.log(data);
+        console.log("comp", data);
       });
-    this.socket.on("all_hands", data =>{
-      this.all_hands = data;
-      this.socket.on("deck", deck_data =>{
-        this.deck = deck_data
-        console.log("TCL: AppComponent -> ngAfterViewInit -> deck_data", deck_data)
-      })
-    })
-}
+    this.socket.on("new_game", data =>{
+      this.all_hands = data.all_hands,
+      this.deck = data.deck,
+      this.player_action = data.p_action,
+      this.discard_stacks = data.discard
+ 
+    },
+      )
+    this.socket.on("update", data =>{
+      this.all_hands = data.all,
+      this.player_action = data.action,
+      this.discard_stacks = data.discard,
+      this.player_stacks = data.player
+    });
+    }
+
 newGame(){
   this.socket.emit("new")
 }
+
+selectCard(card){
+  var index = this.all_hands[0].indexOf(card)
+  this.socket.emit("selectCard", {"action": this.player_action, "card": card, "index": index});
+}
+
 
 }

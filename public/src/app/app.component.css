@@ -22,6 +22,12 @@
     text-align: center;
 }
 
+.white{
+    background-color: white;
+    color: black;
+    text-align: center;
+}
+
 #deck{
 width: 25%;
 display: inline-block;
@@ -33,8 +39,8 @@ display: inline-block;
     vertical-align: top;
     margin-left: 20px;
     border: 2px solid green; 
-    width: 50%;
-    min-height: 600px;
+    width: 70%;
+    height: 450px;
     padding: 10px;
 }
 
@@ -46,6 +52,15 @@ display: inline-block;
 .card{
     display: inline-block;
     height: 80%;
+    width: 10%;
+    vertical-align: top;
+    border: 1px solid black;
+    margin: 0px 5px;
+    border-radius: 5px;
+}
+.stack{
+    display: inline-block;
+    height: 90%;
     width: 15%;
     vertical-align: top;
     border: 1px solid black;
@@ -55,4 +70,18 @@ display: inline-block;
 
 .player_hand{
     height: 180px;
+}
+
+#playmat{
+    border: 1px solid red;
+    height: 250px;
+    width: 80%;
+    background-color: gray;
+
+}
+.playmat{
+    border: 1px solid red;
+    height: 250px;
+    width: 80%;
+
 }

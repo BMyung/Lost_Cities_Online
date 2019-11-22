@@ -1,24 +1,59 @@
-<h1>{{title}}</h1>
+<h1></h1>
 <div id="deck">
 
         <div>{{deck.length}} cards remaining</div>
-        <div>{{clocks}} information tokens</div>
-        <div>{{bombs}} bombs</div> 
+        <div>Active Player: </div>
+        <div id="actions">
+                <div *ngIf="player_action!='draw'" id="play_buttons">
+                <button (click)="player_action = 'discard'">Discard a Card</button>
+                <button (click)="player_action = 'play'">Play a Card</button>
+                <div *ngIf="player_action === 'discard'">
+                        <h3>Please select a card to discard</h3>
+                </div>
+                <div *ngIf="player_action === 'play'">
+                        <h3>Please select a card to play</h3>
+                </div>
+        </div>
+                <div *ngIf="player_action == 'draw'">
+                        <button (click)="drawFromDeck()">draw from Deck</button>
+                        <button (click)="player_action = 'draw_discard'">draw from Discard Pile</button>
+                        <div *ngIf="player_action === 'draw_discard'">
+                                <h3>Please select from the </h3>
+                        </div>
+                </div>
+                <div id="buttons_box">
+                                <button (click)="newGame()">New Game</button>
+                        </div>      
 
+                
+        </div>
 </div>
 
 
 
 <div id="hands">
-<div class="player_hand" *ngFor="let player of players">
-<h3>Player {{player}} hand</h3>
-<div *ngFor="let card of all_hands[player-1]" class="card {{card.color}}">{{card.num}}</div>
+        <div class="player_hand" *ngFor="let player of players">
+                <h3>Player {{player}} hand</h3>
+                <div *ngFor="let card of all_hands[player-1];" class="card {{card.color}}" (click)="selectCard(card)">
+                        {{card.num}}</div>
+
+
+        </div>
+</div>
+<div id="playmat_p2" class="playmat">
+        <div *ngFor="let stack of player_stacks[0] | keyvalue" class="stack {{stack.key}}">
+                <div *ngIf="stack.value.length >0">{{stack.value[stack.value.length -1 ].id}}</div>  
+        </div>
+</div>
+<div id="playmat">
+        <div *ngFor="let stack of discard_stacks | keyvalue" class="stack {{stack.key}}">
+                <div *ngIf="stack.value.length >0">{{stack.value[stack.value.length -1 ].id}}</div>
+        </div>
 
 </div>
+<div id="playmat_p1" class="playmat">
+        <div *ngFor="let stack of player_stacks[1] | keyvalue" class="stack {{stack.key}}"></div>
 </div>
 
-<div id="buttons_box">
-<button (click)="newGame()">New Game</button>
-</div>
+
 <router-outlet></router-outlet>
-
