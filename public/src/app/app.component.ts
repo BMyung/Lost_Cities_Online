@@ -40,6 +40,7 @@ export class AppComponent implements OnInit{
   constructor() {}
   ngOnInit(){
 this.socket = io("http://localhost:8000");
+
 // this.reset()
 }
 
@@ -48,6 +49,7 @@ this.socket = io("http://localhost:8000");
         console.log("comp", data);
       });
     this.socket.on("new_game", data =>{
+      console.log("newgame"),
       this.all_hands = data.all_hands,
       this.deck = data.deck,
       this.player_action = data.p_action,
@@ -68,9 +70,10 @@ newGame(){
 }
 
 selectCard(card){
+  if (this.active_player = true){
   var index = this.all_hands[0].indexOf(card)
   this.socket.emit("selectCard", {"action": this.player_action, "card": card, "index": index});
 }
-
+}
 
 }
