@@ -1,10 +1,12 @@
-const Express = require("express")();
-const Http = require("http").Server(Express);
+const express = require("express")();
+const Http = require("http").Server(express);
 const io = require("socket.io")(Http);
 
 Http.listen(8000, () => {
   console.log("Listening at :8000...");
 });
+
+
 
 player_action = null;
 player_stacks = [{
@@ -104,10 +106,16 @@ io.on("connection", socket => {
       "all_hands": all_hands,
       "deck": deck, 
       "p_action": player_action,
-      "discard": discard_stacks
+      "discard": discard_stacks,
+      "active_player": players[0],
     });
   });
   socket.on("selectCard", data => {
+    if (data.action){
+      all_hands[0].splice(data.index, 1) ///change to active player
+      player_action = "draw";
+      }
+
       if(data.action == "discard"){
         discard_stacks[data.card.color].push(data.card)
       }
@@ -115,8 +123,7 @@ io.on("connection", socket => {
         player_stacks[0][data.card.color].push(data.card)
         console.log(player_stacks)
       }
-      all_hands[0].splice(data.index, 1)
-      player_action = "draw";
+
     // }
     io.emit("update", {
       "discard": discard_stacks,

@@ -2,7 +2,9 @@
 <div id="deck">
 
         <div>{{deck.length}} cards remaining</div>
-        <div>Active Player: </div>
+        {{player_action}}
+        
+        <div>Active Player: {{active_player}}</div>
         <div id="actions">
                 <div *ngIf="player_action!='draw'" id="play_buttons">
                 <button (click)="player_action = 'discard'">Discard a Card</button>
@@ -15,10 +17,10 @@
                 </div>
         </div>
                 <div *ngIf="player_action == 'draw'">
-                        <button (click)="drawFromDeck()">draw from Deck</button>
+                        <button (click)="player_action = draw_deck">draw from Deck</button>
                         <button (click)="player_action = 'draw_discard'">draw from Discard Pile</button>
                         <div *ngIf="player_action === 'draw_discard'">
-                                <h3>Please select from the </h3>
+                                <h3>Please select a card from the discard pile </h3>
                         </div>
                 </div>
                 <div id="buttons_box">

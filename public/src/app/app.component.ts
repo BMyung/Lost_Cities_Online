@@ -12,7 +12,7 @@ export class AppComponent implements OnInit{
   player_action = null;
   all_hands = [[],[]];
   deck = [];
-  active_player = false;
+  active_player = null;
   private context: any;
   private socket: any;
   players = [1,2];
@@ -49,11 +49,11 @@ this.socket = io("http://localhost:8000");
         console.log("comp", data);
       });
     this.socket.on("new_game", data =>{
-      console.log("newgame"),
       this.all_hands = data.all_hands,
       this.deck = data.deck,
       this.player_action = data.p_action,
-      this.discard_stacks = data.discard
+      this.discard_stacks = data.discard,
+      this.active_player = data.active_player
  
     },
       )
@@ -74,6 +74,10 @@ selectCard(card){
   var index = this.all_hands[0].indexOf(card)
   this.socket.emit("selectCard", {"action": this.player_action, "card": card, "index": index});
 }
+}
+
+drawCard(){
+
 }
 
 }
