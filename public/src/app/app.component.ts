@@ -70,14 +70,12 @@ newGame(){
 }
 
 selectCard(card){
-  if (this.active_player = true){
+  if (this.active_player){
   var index = this.all_hands[0].indexOf(card)
   this.socket.emit("selectCard", {"action": this.player_action, "card": card, "index": index});
 }
 }
 
-drawCard(){
 
-}
 
 }
